@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Serveurs from './Serveurs.vue'
+import Serveurs from './Channels.vue'
 
 </script>
 

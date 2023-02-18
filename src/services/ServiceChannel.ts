@@ -2,10 +2,18 @@ import {ServiceXhr} from "./ServiceXhr";
 
 export const ServiceChannel = {
     getAll: () => {
-        ServiceXhr.callWithAuthNoBody("https://edu.tardigrade.land/msg/protected/user/channels", "GET");
+        return ServiceXhr.callWithAuthNoBody("https://edu.tardigrade.land/msg/protected/user/channels", "GET");
     },
-    createChannel: (chennel) => {
-        const data = JSON.stringify(chennel);
-        ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/user/channels", data,"PUT");
+    create: (channel) => {
+        const data = JSON.stringify(channel);
+        return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data,"PUT");
+    },
+    edit: (channel, id) => {
+        const data = JSON.stringify(channel);
+        return ServiceXhr.callWithAuth(`https://edu.tardigrade.land/msg/protected/channel/${id}/update_metadata`,
+            data, "POST");
+    },
+    delete: (channelId) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}`, "DELETE");
     }
 }
