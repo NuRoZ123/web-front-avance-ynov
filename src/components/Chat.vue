@@ -6,10 +6,12 @@
     </div>
 
     <div v-if="chatStore.selectedChannel !== null" class="flex flex-col h-screen w-full items-center justify-evenly">
-      <div class="w-9/12 h-5/6 bg-[#313338] overflow-y-scrolls scrollbar-thin scrollbar-thumb-[#202225] scrollbar-track-[#2f3136]">
+      <div class="w-3/5 h-5/6 bg-[#313338] overflow-y-scrolls scrollbar-thin scrollbar-thumb-[#202225] scrollbar-track-[#2f3136]">
+        <button v-on:click="addMessage" class="text-white bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-lg ml-[50%] translate-[-50%] mt-4">charger plus</button>
         <Message v-for="message of chatStore.selectedChannel.messages" :message="message" :key="message"/>
       </div>
-      <div class="relative w-9/12 h-fit">
+
+      <div class="relative w-3/5 h-fit">
         <input v-model="message" class="w-full pt-2 pb-2 pl-4 text-white rounded-3xl bg-[#313338]" placeholder="saisir  une message">
         <font-awesome-icon icon="fas fa-paper-plane" size="lg" v-on:click="sendMessage()" class="absolute right-4 top-[50%] bottom-[50%] rounded-r-3xl text-white bg-[#313338] translate-y-[-50%]"/>
       </div>
@@ -95,6 +97,10 @@ const deleteUser = async function(user) {
   if(hasDeleteUser) {
     chatStore.removeUser(user);
   }
+}
+
+const addMessage = async function() {
+  chatStore.addMessageToSelectedChannel();
 }
 
 </script>

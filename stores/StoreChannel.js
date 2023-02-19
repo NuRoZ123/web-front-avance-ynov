@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import {ServiceChannel} from "../src/services/ServiceChannel";
+import {StoreChat} from "./StoreChat.js";
 
 export const StoreChannel = defineStore('StoreChannel', {
     state : () => ({
@@ -13,6 +14,32 @@ export const StoreChannel = defineStore('StoreChannel', {
         async setupAll() {
             const response = await ServiceChannel.getAll();
             this.channels = await response.json();
+
+            for(let channel of this.channels) {
+                channel.offset = 0;
+                channel.messages = [];
+                channel.unread = false;
+
+                if(!channel.ws) {
+                    channel.ws = new WebSocket(`wss://edu.tardigrade.land/msg/ws/channel/${channel.id}/token/${localStorage.getItem("token")}`);
+
+                    channel.ws.onmessage = function(event) {
+                        const message = JSON.parse(event.data);
+                        if(message.author !== localStorage.getItem("username")) {
+                            StoreChannel().addMessageToChannel(message);
+                            console.log("new message")
+                        }
+                    }
+
+                    channel.ws.onopen = function(event) {
+                        console.log(`Successfully connected to the ws for channel: ${channel.id}`)
+                    }
+
+                    channel.ws.onclose = function(event) {
+                        console.log(`Successfuly disconnected to the ws for channel: ${channel.id}`)
+                    }
+                }
+            }
         },
 
         changeCreateChannelModal() {
@@ -115,6 +142,14 @@ export const StoreChannel = defineStore('StoreChannel', {
                     reject(false);
                 }
             });
+        },
+
+        addMessageToChannel(message) {
+            const index = this.getIndexFromArrayById(this.channels, message.channel_id);
+            this.channels[index].messages.push(message);
+            if(StoreChat().selectedChannel == null || message.channel_id !== StoreChat().selectedChannel.id) {
+                this.channels[index].unread = true;
+            }
         }
     },
     getters : {},

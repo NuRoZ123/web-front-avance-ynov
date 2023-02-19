@@ -6,7 +6,19 @@ export const ServiceMessages = {
     },
 
     create: (message, channel) => {
-        const data = JSON.stringify({Text: message});
-        return ServiceXhr.callWithAuth(`https://edu.tardigrade.land/msg/protected/channel/${channel.id}/message`, data, "POST");
+        let isUrl;
+        try {
+            const url = new URL(message);
+            isUrl = true;
+        } catch (_) {isUrl = false;}
+        let data;
+
+        if(isUrl) {
+            data = JSON.stringify({Image: message});
+        } else {
+            data = JSON.stringify({Text: message});
+        }
+
+        return {api: ServiceXhr.callWithAuth(`https://edu.tardigrade.land/msg/protected/channel/${channel.id}/message`, data, "POST"), isUrl: isUrl};
     }
 }
