@@ -24,9 +24,11 @@
 
 <script setup>
 import {StoreChannel} from "../../stores/StoreChannel";
+import {StoreChat} from "../../stores/StoreChat";
 import {ref} from "vue";
 
 const channelStore = StoreChannel();
+const chatStore = StoreChat();
 
 const props = defineProps({
   channel  : Object
@@ -36,7 +38,7 @@ const isSelected = ref(false);
 const username = localStorage.getItem("username");
 
 const clickOnBubble = function() {
-  if(channelStore.isDeleteMode) {
+    if(channelStore.isDeleteMode) {
         if(isSelected.value) {
           channelStore.removeFromSoonDeletedChannel(props.channel);
         } else {
@@ -44,6 +46,8 @@ const clickOnBubble = function() {
         }
 
         isSelected.value = !isSelected.value;
-      }
+    } else {
+      chatStore.setSelectedChannel(props.channel);
+    }
 }
 </script>

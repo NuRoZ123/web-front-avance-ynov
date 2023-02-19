@@ -15,5 +15,13 @@ export const ServiceChannel = {
     },
     delete: (channelId) => {
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}`, "DELETE");
+    },
+
+    addUser: (channel, username) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channel.id}/user/${username}`, "PUT");
+    },
+
+    removeUser: (channel, username) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channel.id}/user/${username}`, "DELETE");
     }
 }

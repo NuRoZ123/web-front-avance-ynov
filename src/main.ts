@@ -10,10 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
-import {faUser, faTag, faPlus, faXmark, faMinus, faEdit, faTrash, faCheck, faBan} from "@fortawesome/free-solid-svg-icons";
+import {faUser, faTag, faPlus, faXmark, faMinus, faEdit, faTrash, faCheck, faBan, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faDiscord, faUser, faTag, faPlus, faXmark, faMinus, faEdit, faTrash, faCheck, faBan);
+library.add(faDiscord, faUser, faTag, faPlus, faXmark, faMinus, faEdit, faTrash, faCheck, faBan, faPaperPlane);
 
 const pinia = createPinia();
 

@@ -1,4 +1,4 @@
-import {defineStore} from 'pinia'
+import {defineStore} from 'pinia';
 import {ServiceChannel} from "../src/services/ServiceChannel";
 
 export const StoreChannel = defineStore('StoreChannel', {
@@ -61,7 +61,7 @@ export const StoreChannel = defineStore('StoreChannel', {
         },
 
         async editChannel(editedChannel, channel) {
-            const response = await ServiceChannel.edit(editedChannel, channel.id);
+            let response = await ServiceChannel.edit(editedChannel, channel.id);
             if(response.ok) {
                 let finalChannel = {...channel, ...editedChannel};
 
@@ -70,22 +70,6 @@ export const StoreChannel = defineStore('StoreChannel', {
 
                 this.closeEditModal();
             }
-
-
-
-            // envoie de la requetes
-            ServiceChannel.edit(editedChannel, this.selectedChannel.id).then((response) => {
-
-                // si tout est ok
-                if(response.ok) {
-
-                    // on formate l'object avec les encien attributs a ne pas modifé (creator, id, users)
-                    let finalChannel = {...this.selectedChannel, ...editedChannel};
-
-                    // et on l'envoie dans la liste des serveur
-                    this.$emit("hideEditChannelModal", finalChannel);
-                }
-            })
         },
 
         getIndexFromArrayById: function(array, id) {
@@ -110,6 +94,28 @@ export const StoreChannel = defineStore('StoreChannel', {
                 this.soonDeleteChannel.push(channel);
             }
         },
+
+        addUser(channel, username) {
+            return new Promise(async (resolve, reject) => {
+                const response = await ServiceChannel.addUser(channel, username);
+                if(response.ok) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            });
+        },
+
+        removeUser(channel, username) {
+            return new Promise(async (resolve, reject) => {
+                const response = await ServiceChannel.removeUser(channel, username);
+                if(response.ok) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            });
+        }
     },
     getters : {},
 });
