@@ -62,7 +62,7 @@ const login = async function () {
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", username.value);
     localStorage.setItem("connexionDate", Date.now().valueOf());
-    window.location.reload();
+    window.location.href = "/";
   } else {
     error.value = "Username or password incorrect"
   }

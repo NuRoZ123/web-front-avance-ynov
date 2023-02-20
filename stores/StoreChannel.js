@@ -27,7 +27,8 @@ export const StoreChannel = defineStore('StoreChannel', {
                         const message = JSON.parse(event.data);
                         if(message.author !== localStorage.getItem("username")) {
                             StoreChannel().addMessageToChannel(message);
-                            console.log("new message")
+                            const audio = new Audio("/src/assets/notification.mp3");
+                            audio.play();
                         }
                     }
 

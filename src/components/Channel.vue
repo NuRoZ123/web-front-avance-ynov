@@ -2,7 +2,7 @@
   <!-- cercle principale d'un channel -->
   <div :title="channel.name" v-on:click="clickOnBubble" class="w-12 h-12 bg-[#2f3136] overflow-hidden flex justify-center items-center rounded-3xl text-white duration-200 hover:rounded-xl hover:bg-[#454fbf]">
     <!-- image du channel -->
-    <img class="w-[100px]" :src="channel.img">
+    <img class="h-12 w-auto" :src="channel.img">
     <div v-show="channel.unread" class="w-2 h-2 absolute pt-3 pl-4">
       <div class="bg-[#ff0000] w-4 h-4 rounded-3xl"></div>
     </div>

@@ -5,8 +5,8 @@
       <span>Aucun salon selectionné.</span>
     </div>
 
-    <div v-if="chatStore.selectedChannel !== null" class="flex flex-col h-screen w-full items-center justify-evenly">
-      <div class="w-3/5 h-5/6 bg-[#313338] overflow-y-scrolls scrollbar-thin scrollbar-thumb-[#202225] scrollbar-track-[#2f3136]">
+    <div v-if="chatStore.selectedChannel !== null" :class="{colorMessage: true}" class="flex flex-col h-screen w-full items-center justify-evenly">
+      <div :style="primaryColor" class="w-3/5 h-5/6 overflow-y-scrolls scrollbar-thin scrollbar-track-[#2f3136] scrollbar-thumb-[#202225]">
         <button v-on:click="addMessage" class="text-white bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-lg ml-[50%] translate-[-50%] mt-4">charger plus</button>
         <Message v-for="message of chatStore.selectedChannel.messages" :message="message" :key="message"/>
       </div>
@@ -50,7 +50,6 @@
 import {StoreChat} from "../../stores/StoreChat.js";
 import {StoreChannel} from "../../stores/StoreChannel.js";
 import Message from './Message.vue';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {ref} from "vue";
 
 const chatStore = StoreChat();
@@ -58,9 +57,19 @@ const channelStore = StoreChannel();
 
 let message = "";
 const username = localStorage.getItem("username");
-let addUsername = ref("");
-let showAddUser = ref(false);
-let isDeleteMode = ref(false);
+const addUsername = ref("");
+const showAddUser = ref(false);
+const isDeleteMode = ref(false);
+
+const accentColor = ref('#202225');
+if(chatStore.selectedChannel && chatStore.selectedChannel.theme && chatStore.selectedChannel.theme.accent_color) {
+  accentColor.value = chatStore.selectedChannel.theme.accent_color;
+}
+
+let primaryColor = "color: #2f3136";
+if(chatStore.selectedChannel && chatStore.selectedChannel.theme && chatStore.selectedChannel.theme.primary_color) {
+  primaryColor = `color: ${chatStore.selectedChannel.theme.primary_color}`;
+}
 
 const sendMessage = function(){
   if(message.trim() !== "") {
