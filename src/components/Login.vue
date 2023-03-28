@@ -35,11 +35,6 @@
           >
             Connexion
           </button>
-          <a
-            class="font-medium text-indigo-500 hover:text-indigo-600"
-          >
-            Mot de passe oublié ?
-          </a>
         </div>
       </div>
     </div>

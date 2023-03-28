@@ -1,6 +1,6 @@
 <template>
   <!-- frame principale -->
-  <div class="w-3/5 h-3/5 shadow-2xl absolute left-[20%] top-[20%] bg-[#2f3136] text-center">
+  <div class="z-20 w-3/5 h-3/5 shadow-2xl absolute left-[20%] top-[20%] bg-[#2f3136] text-center">
 
     <!-- croix (fermeture modal) -->
     <div class="w-full flex justify-end">
